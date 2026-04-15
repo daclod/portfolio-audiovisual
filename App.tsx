@@ -18,33 +18,41 @@ const App: React.FC = () => {
   const mainRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
-    // Select all section children inside the main container
-    const sections = gsap.utils.toArray('.gsap-reveal-section');
+    let ctx = gsap.context(() => {
+      // Select all section children inside the main container
+      const sections = gsap.utils.toArray('.gsap-reveal-section');
 
-    sections.forEach((section: any) => {
-      gsap.fromTo(
-        section,
-        {
-          opacity: 0,
-          y: 50,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 80%', // Triggers when the top of the section hits 80% of viewport height
-            end: 'top 20%',
-            toggleActions: 'play none none reverse', // Play forward on enter, reverse on scroll back up
+      sections.forEach((section: any) => {
+        // Set initial state via CSS/GSAP so it doesn't flash before JS runs
+        gsap.set(section, { opacity: 0, y: 50 });
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 90%', // Trigger slightly earlier to ensure it shows when navigating
+          onEnter: () => {
+            gsap.to(section, {
+              opacity: 1,
+              y: 0,
+              duration: 1.2,
+              ease: 'power3.out',
+              overwrite: 'auto'
+            });
           },
-        }
-      );
-    });
+          // We don't reverse the animation on scroll up to prevent the "disappearing" bug
+          // when clicking nav links that jump around the page.
+        });
+      });
+    }, mainRef); // Scope to mainRef
+
+    // Force a ScrollTrigger refresh after a short delay to account for any initial layout shifts
+    // (e.g., images loading, 3D canvas initializing)
+    const timeout = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 500);
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      clearTimeout(timeout);
+      ctx.revert(); // Safely clean up all GSAP animations and ScrollTriggers created in this context
     };
   }, []);
 
