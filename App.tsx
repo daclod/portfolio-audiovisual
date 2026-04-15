@@ -1,6 +1,7 @@
 
 import React from 'react';
 import Header from './components/Header';
+import BackgroundCanvas from './components/BackgroundCanvas';
 import Hero from './components/Hero';
 import About from './components/About';
 import Studies from './components/Studies';
@@ -11,9 +12,10 @@ import Contact from './components/Contact';
 
 const App: React.FC = () => {
   return (
-    <div className="bg-slate-900 min-h-screen text-slate-300">
+    <div className="bg-slate-900 min-h-screen text-slate-300 relative">
+      <BackgroundCanvas />
       <Header />
-      <main>
+      <main className="relative z-10">
         <Hero />
         <div className="space-y-24 md:space-y-32 px-6 md:px-12 lg:px-24">
           <About />
