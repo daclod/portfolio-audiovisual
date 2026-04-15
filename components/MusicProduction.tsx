@@ -53,10 +53,10 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ title, audioUrl, description,
 
   if (isFeatured) {
     return (
-      <div className="relative bg-gradient-to-br from-slate-800/90 via-cyan-900/70 to-blue-900/80 p-5 sm:p-6 md:p-8 rounded-xl border-2 border-cyan-500/50 shadow-2xl shadow-cyan-500/20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-600/20 via-blue-600/20 to-cyan-500/20"></div>
-        <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/30 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/30 rounded-full blur-2xl"></div>
+      <div className="relative bg-slate-800/40 backdrop-blur-md p-5 sm:p-6 md:p-8 rounded-xl border border-cyan-500/30 shadow-2xl shadow-cyan-500/10 overflow-hidden group hover:border-cyan-400/60 transition-colors duration-500">
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl group-hover:bg-cyan-400/30 transition-colors duration-500"></div>
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-400/30 transition-colors duration-500"></div>
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ title, audioUrl, description,
   }
 
   return (
-    <div className="bg-slate-900/60 p-4 sm:p-5 md:p-6 rounded-lg border border-slate-700/50">
+    <div className="bg-slate-900/40 backdrop-blur-sm p-4 sm:p-5 md:p-6 rounded-lg border border-slate-700/50 hover:border-slate-600/80 transition-colors duration-300 shadow-xl shadow-black/20">
       <h4 className="text-base sm:text-lg font-bold text-white mb-1 sm:mb-2">{title}</h4>
       <p className="text-xs sm:text-sm text-slate-400 mb-3 sm:mb-4">{description}</p>
       <div className="space-y-3 sm:space-y-4">

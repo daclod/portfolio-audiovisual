@@ -43,6 +43,36 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   const showAutoHoverRef = useRef(false);
   const isPreviewPlayingRef = useRef(false);
 
+  // Tilt Effect State
+  const [tiltStyle, setTiltStyle] = useState({ transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg)' });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current || isMobile) return;
+
+    const rect = cardRef.current.getBoundingClientRect();
+
+    // Calculate mouse position relative to the center of the card
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+
+    // Determine rotation based on mouse position (max 10 degrees)
+    const rotateX = -(y / (rect.height / 2)) * 10;
+    const rotateY = (x / (rect.width / 2)) * 10;
+
+    setTiltStyle({
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+      transition: 'transform 0.1s ease-out'
+    });
+  };
+
+  const handleMouseLeave = () => {
+    if (isMobile) return;
+    setTiltStyle({
+      transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+      transition: 'transform 0.5s ease-in-out'
+    });
+  };
+
   useEffect(() => {
     if (!project.videoUrl || !isMobile || !videoPreviewRef.current || !cardRef.current) return;
 
@@ -267,9 +297,12 @@ const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
     <>
       <div
         ref={cardRef}
-        className={`group relative overflow-hidden rounded-lg shadow-lg bg-slate-800 border border-slate-700/50 ${
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        style={!isMobile ? tiltStyle : {}}
+        className={`group relative overflow-hidden rounded-lg shadow-2xl bg-slate-800 border border-slate-700/50 ${
           project.videoUrl ? 'cursor-pointer' : ''
-        } transition-all duration-300 hover:border-cyan-500/50 ${
+        } hover:border-cyan-500/50 hover:shadow-cyan-500/20 z-10 ${
           isMobile && showAutoHover ? 'border-cyan-500/50' : ''
         }`}
         onClick={project.videoUrl ? openVideo : undefined}
