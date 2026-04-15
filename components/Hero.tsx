@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
     
     if (targetElement) {
       const headerHeight = 80;
-      const targetPosition = targetElement.offsetTop - headerHeight;
+      const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
       
       // Disparar evento personalizado para animar el título
       const scrollEvent = new CustomEvent('section-scroll', { detail: { sectionId: 'projects' } });
