@@ -69,7 +69,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ title, audioUrl, description,
             <div className="flex items-center gap-3 sm:gap-4">
               <button
                 onClick={togglePlay}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full p-3 sm:p-3.5 md:p-4 transition-all duration-200 flex-shrink-0 shadow-lg shadow-cyan-500/50 transform hover:scale-110"
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white rounded-full p-3 sm:p-3.5 md:p-4 transition-all duration-200 flex-shrink-0 shadow-lg shadow-cyan-500/50 transform hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                 aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
               >
                 {isPlaying ? (
@@ -89,7 +89,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ title, audioUrl, description,
                   max={duration || 0}
                   value={currentTime}
                   onChange={handleSeek}
-                  className="w-full h-2 sm:h-2.5 bg-slate-700/50 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                  aria-label="Progreso de audio"
+                  className="w-full h-2 sm:h-2.5 bg-slate-700/50 rounded-lg appearance-none cursor-pointer accent-cyan-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
                 />
                 <div className="flex justify-between text-sm text-slate-200 mt-1">
                   <span>{formatTime(currentTime)}</span>
@@ -118,7 +119,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ title, audioUrl, description,
         <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
           <button
             onClick={togglePlay}
-            className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full p-2 sm:p-2.5 md:p-3 transition-colors duration-200 flex-shrink-0"
+            className="bg-cyan-500 hover:bg-cyan-600 text-white rounded-full p-2 sm:p-2.5 md:p-3 transition-colors duration-200 flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
           >
             {isPlaying ? (
@@ -138,7 +139,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ title, audioUrl, description,
               max={duration || 0}
               value={currentTime}
               onChange={handleSeek}
-              className="w-full h-1.5 sm:h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+              aria-label="Progreso de audio"
+              className="w-full h-1.5 sm:h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-cyan-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
             />
             <div className="flex justify-between text-xs text-slate-400 mt-0.5 sm:mt-1">
               <span className="text-xs">{formatTime(currentTime)}</span>
