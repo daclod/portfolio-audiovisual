@@ -16,8 +16,10 @@ const Header: React.FC = () => {
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
-          const offsetTop = element.offsetTop;
-          const offsetBottom = offsetTop + element.offsetHeight;
+          // Use getBoundingClientRect to get true position regardless of CSS transforms from GSAP
+          const rect = element.getBoundingClientRect();
+          const offsetTop = rect.top + window.scrollY;
+          const offsetBottom = offsetTop + rect.height;
           
           if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
             setActiveSection(section);
@@ -40,7 +42,8 @@ const Header: React.FC = () => {
     
     if (targetElement) {
       const headerHeight = 80; // Altura aproximada del header
-      const targetPosition = targetElement.offsetTop - headerHeight;
+      // Use getBoundingClientRect to calculate exact position relative to current scroll
+      const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
       
       // Disparar evento personalizado para animar el título
       const scrollEvent = new CustomEvent('section-scroll', { detail: { sectionId: targetId } });
